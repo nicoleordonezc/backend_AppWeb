@@ -1,6 +1,8 @@
 // imports
 import { Router } from "express";
 import { getDB } from "../db/config.js";
+import { tareaDTO, estadoDTO } from "../dto/tarea.dto.js";
+import { validatorDTO } from "../midddleware/validatorDTO.js"
 
 const router = Router();
 
@@ -30,7 +32,7 @@ router.get("/get/:estado", async function (req, res) {
 });
 
 //Ingregar nueva tarea
-router.post("/postTarea", async function (req, res) {
+router.post("/postTarea", tareaDTO, validatorDTO, async function (req, res) {
     try {
         const {titulo, descripcion, fechaLimite, responsable} = req.body;
         if(!titulo || !descripcion || !fechaLimite || !responsable){
@@ -51,7 +53,7 @@ router.post("/postTarea", async function (req, res) {
 });
 
 //Cambiar estado
-router.patch("/patch/:nombreTarea", async function (req, res) {
+router.patch("/patch/:nombreTarea", estadoDTO, validatorDTO, async function (req, res) {
     try {
         const idTarea = req.params.nombreTarea;  
         const tareaEditar = await getDB().collection("tareas").findOne({titulo:idTarea});
