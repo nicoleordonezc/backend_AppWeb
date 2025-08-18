@@ -29,6 +29,7 @@ router.get("/get/:estado", async function (req, res) {
     }
 });
 
+//Ingregar nueva tarea
 router.post("/postTarea", async function (req, res) {
     try {
         const {titulo, descripcion, fechaLimite, responsable} = req.body;
@@ -47,5 +48,22 @@ router.post("/postTarea", async function (req, res) {
     } catch (error) {
         res.status(500).json({error: "Error interno del servidor"})
     }
+});
+
+//Cambiar estado
+router.patch("/patch/:nombreTarea", async function (req, res) {
+    try {
+        const idTarea = req.params.nombreTarea;  
+        const tareaEditar = await getDB().collection("tareas").findOne({titulo:idTarea});
+        if (!tareaEditar){
+            res.status(404).json({error: "La tarea no existe"})
+        };
+        const {nuevoEstado} = req.body;
+        await getDB().collection("tareas").updateOne({titulo:idTarea}, {$set:{estado:nuevoEstado}})
+        res.status(201).json({message: "El estado de la tarea ha sido actualizado"})
+    } catch (error) {
+        res.status(500).json({error: "Error interno del servidor"})
+    }
 })
+
 export default router;
