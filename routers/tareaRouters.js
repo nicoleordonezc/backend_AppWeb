@@ -29,5 +29,23 @@ router.get("/get/:estado", async function (req, res) {
     }
 });
 
-router.post("/postTarea")
+router.post("/postTarea", async function (req, res) {
+    try {
+        const {titulo, descripcion, fechaLimite, responsable} = req.body;
+        if(!titulo || !descripcion || !fechaLimite || !responsable){
+             res.status(400).json({ error: "Datos invalidos"})
+          };
+        const nuevaTarea = {
+            titulo,
+            descripcion,
+            fechaLimite,
+            responsable,
+            estado: null  
+        };
+        await getDB().collection("tareas").insertOne(nuevaTarea);
+        res.status(201).json({message: "La tarea ha sido agregada exitosamente"})
+    } catch (error) {
+        res.status(500).json({error: "Error interno del servidor"})
+    }
+})
 export default router;
