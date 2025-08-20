@@ -36,8 +36,8 @@ Con esta aplicación podrás:
 - **Express-validator** para validaciones  
 
 ### Frontend
-- **React**  
-- **TypeScript**  
+- **React**
+- **JavaScript** 
 - **Vite** como empaquetador  
 
 ---
@@ -98,7 +98,7 @@ El frontend quedará disponible en:
 **GET** `/getall`
 
 ```bash
-curl -X GET http://localhost:5500/getall
+ GET http://localhost:5500/getall
 ```
 
 ### 2. Obtener tareas por estado
@@ -106,7 +106,7 @@ curl -X GET http://localhost:5500/getall
 **GET** `/get/:estado`
 
 ```bash
-curl -X GET http://localhost:5500/get/pendiente
+ GET http://localhost:5500/get/pendiente
 ```
 
 ### 3. Crear una nueva tarea
@@ -114,9 +114,9 @@ curl -X GET http://localhost:5500/get/pendiente
 **POST** `/postTarea`
 
 ```bash
-curl -X POST http://localhost:5500/postTarea \
--H "Content-Type: application/json" \
--d '{
+ POST http://localhost:5500/postTarea \
+ "Content-Type: application/json" \
+ '{
   "titulo": "Hacer el informe",
   "descripcion": "Preparar el informe mensual",
   "fechaLimite": "2025-08-25",
@@ -129,9 +129,9 @@ curl -X POST http://localhost:5500/postTarea \
 **PATCH** `/patch/:nombreTarea`
 
 ```bash
-curl -X PATCH http://localhost:5500/patch/Hacer%20el%20informe \
--H "Content-Type: application/json" \
--d '{
+ PATCH http://localhost:5500/patch/Hacer%20el%20informe \
+ "Content-Type: application/json" \
+ '{
   "nuevoEstado": "completada"
 }'
 ```
